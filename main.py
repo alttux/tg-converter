@@ -17,7 +17,7 @@ bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
 
-async def send_photo(bot: Bot, chat_id: int, file_path: str, caption: str = None):
+async def send_p_doc(bot: Bot, chat_id: int, file_path: str, caption: str = None):
     """
     Отправляет фото в указанный чат, используя aiogram 3.x.
 
@@ -26,8 +26,8 @@ async def send_photo(bot: Bot, chat_id: int, file_path: str, caption: str = None
     :param file_path: Путь к файлу изображения
     :param caption: (опционально) Подпись к изображению
     """
-    photo = FSInputFile(file_path)  # Создаем объект файла
-    await bot.send_photo(chat_id, photo, caption=caption)
+    doc = FSInputFile(file_path)  # Создаем объект файла
+    await bot.send_document(chat_id, doc, caption=caption)
 
 
 # Хэндлер на команду /start
@@ -40,14 +40,17 @@ async def cmd_start(message: Message):
 @dp.message(F.photo)
 async def download_photo(message: Message, bot: Bot):
     img = message.photo[-1].file_id
-    path_to_input = os.path.join(INPUT_IMG, f"{img}.jpg")
+    path_to_input = os.path.join(INPUT_IMG, f"{img}.png")
+    print(path_to_input)
     await bot.download(
         message.photo[-1],
         destination=path_to_input
     )
-    img_to_out = Image.open(path_to_input)
-    await send_photo(
-        bot, message.chat.id, path_to_input, caption="Вот ваше изображение!"
+    img_out = Image.open(path_to_input)
+    path_to_output = os.path.join(INPUT_IMG, f"{img}.jpg")
+    img_out.save(path_to_output)
+    await send_p_doc(
+        bot, message.chat.id, path_to_output, caption="Вот ваше изображение!"
     )
 
 
