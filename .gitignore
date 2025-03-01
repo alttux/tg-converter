@@ -1,2 +1,4 @@
 /.venv
 /env.py
+/.idea
+/.__pycache__
