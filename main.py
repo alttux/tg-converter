@@ -22,9 +22,12 @@ dp = Dispatcher()
 
 def formats_kb():
     inline_kb_list = [
-        [InlineKeyboardButton(text="Мой хабр", url='https://habr.com/ru/users/yakvenalex/')],
-        [InlineKeyboardButton(text="Мой Telegram", url='tg://resolve?domain=yakvenalexx')],
-        [InlineKeyboardButton(text="Веб приложение", web_app=WebAppInfo(url="https://tg-promo-bot.ru/questions"))]
+        [InlineKeyboardButton(text="AVIF")],
+        [InlineKeyboardButton(text="BMP")],
+        [InlineKeyboardButton(text="GIF")],
+        [InlineKeyboardButton(text="JPG")],
+        [InlineKeyboardButton(text="PNG")],
+        [InlineKeyboardButton(text="WEBP")]
     ]
     return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
 
@@ -48,7 +51,6 @@ async def download_photo(message: Message, bot: Bot):
     await converter(
         message, bot, path_to_input, img_format, INPUT_IMG, img
     )
-
 
 # Запуск процесса поллинга новых апдейтов
 async def main():
