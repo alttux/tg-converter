@@ -1,35 +1,36 @@
 import os
 from PIL import Image
-from aiogram import Bot
-from aiogram.types import  Message, FSInputFile
+from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-async def send_p_doc(bot: Bot, chat_id: int, file_path: str, caption: str = None):
-    """
-    Отправляет фото в указанный чат.
+from env import OUTPUT_IMG
 
-    :param bot: объект бота
-    :param chat_id: ID чата, куда отправлять фото
-    :param file_path: Путь к файлу изображения
-    :param caption: (опционально) Подпись к изображению
-    """
-    doc = FSInputFile(file_path)  # Создаем объект файла
-    await bot.send_document(chat_id, doc, caption=caption)
+# Список поддерживаемых форматов
+SUPPORTED_FORMATS = ['AVIF', 'BMP', 'GIF', 'JPG', 'PNG', 'WEBP']
 
-async def converter(message: Message, bot: Bot, img_path: str, img_format: str, input_img: str, img, send_func = send_p_doc):
+def formats_kb():
     """
-    Конвертирует фото.
+    Создает инлайн-клавиатуру с поддерживаемыми форматами.
+    """
+    inline_kb_list = [
+        [InlineKeyboardButton(text=format, callback_data=format.lower())] for format in SUPPORTED_FORMATS
+    ]
+    return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
 
-    :param message: объект сообщения 
-    :param bot: объект бота
-    :param img_path: путь до конвертируемого изображения
-    :param img_format: формат выходного узображения 
-    :param input_img:  путь до директории с конвертируемым изображением
-    :param img:  имя изображения
-    :param send_func: (по умолчанию: send_p_doc) функция для конвертиации изображения  
+async def convert_image(input_path: str, output_format: str) -> str:
     """
-    img_out = Image.open(img_path)
-    path_to_output = os.path.join(input_img, f"{img}.{img_format}")
-    img_out.save(path_to_output)
-    await send_func(
-        bot, message.chat.id, path_to_output, caption="Вот ваше изображение!"
-    )
+    Конвертирует изображение в указанный формат.
+
+    :param input_path: Путь к входному изображению
+    :param output_format: Формат выходного изображения
+    :return: Путь к выходному изображению
+    """
+    # Открываем входное изображение
+    with Image.open(input_path) as img:
+        # Определяем путь для сохранения выходного изображения
+        base_name = os.path.splitext(os.path.basename(input_path))[0]
+        output_path = os.path.join(OUTPUT_IMG, f"{base_name}.{output_format}")
+
+        # Сохраняем изображение в новом формате
+        img.save(output_path)
+
+    return output_path
