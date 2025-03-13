@@ -1,6 +1,5 @@
-/.venv
-/env.py
+/venv
+env.py
 /.idea
 /input_img
 /output_img
-/tg-converter.code-workspace

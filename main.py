@@ -29,9 +29,15 @@ class ConversionStates(StatesGroup):
     waiting_for_output_format = State()
     waiting_for_image = State()
 
+# Хэндлер на команду /start
+@dp.message(Command("start"))
+async def cmd_start(message: Message, state: FSMContext):
+    await message.answer("Добро пожаловать в конвертер! введите команду /img для работы")
+    await state.set_state(ConversionStates.waiting_for_input_format)
+
 # Хэндлер на команду /img
 @dp.message(Command("img"))
-async def cmd_start(message: Message, state: FSMContext):
+async def cmd_img(message: Message, state: FSMContext):
     await message.answer("Добро пожаловать в конвертер! Пожалуйста, выберите формат входного файла:", reply_markup=formats_kb())
     await state.set_state(ConversionStates.waiting_for_input_format)
 
