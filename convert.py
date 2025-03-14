@@ -1,20 +1,23 @@
 import os
 from PIL import Image
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from moviepy import VideoFileClip
 
-from env import OUTPUT_IMG
+from env import OUTPUT_IMG, OUTPUT_VID
 
 # Список поддерживаемых форматов
-SUPPORTED_FORMATS = ['BMP', 'GIF', 'JPG', 'PNG', 'WEBP']
+SUPPORTED_FORMATS_IMG = ['BMP', 'GIF', 'JPG', 'PNG', 'WEBP']
+SUPPORTED_FORMATS_VID = ['MP4', 'MOV']
 
-def formats_kb():
+def formats_kb_img():
     """
     Создает инлайн-клавиатуру с поддерживаемыми форматами.
     """
     inline_kb_list = [
-        [InlineKeyboardButton(text=format, callback_data=format.lower())] for format in SUPPORTED_FORMATS
+        [InlineKeyboardButton(text=format, callback_data=format.lower())] for format in SUPPORTED_FORMATS_IMG
     ]
     return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
+
 
 async def convert_image(input_path: str, output_format: str) -> str:
     """
