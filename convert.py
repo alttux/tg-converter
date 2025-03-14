@@ -7,7 +7,6 @@ from env import OUTPUT_IMG, OUTPUT_VID
 
 # Список поддерживаемых форматов
 SUPPORTED_FORMATS_IMG = ['BMP', 'GIF', 'JPG', 'PNG', 'WEBP']
-SUPPORTED_FORMATS_VID = ['MP4', 'MOV']
 
 def formats_kb_img():
     """
