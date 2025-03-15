@@ -8,8 +8,8 @@ from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 
-from env import TOKEN, INPUT_IMG, INPUT_VID
-from convert import convert_image, formats_kb_img, formats_kb_vid, convert_video
+from env import TOKEN, INPUT_IMG
+from convert import convert_image, formats_kb_img
 
 # Включаем логирование
 logging.basicConfig(level=logging.INFO)

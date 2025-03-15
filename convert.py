@@ -2,8 +2,9 @@ import os
 from PIL import Image
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from moviepy import VideoFileClip
+from pdf2docx import Converter
 
-from env import OUTPUT_IMG, OUTPUT_VID
+from env import OUTPUT_IMG, OUTPUT_DOC, INPUT_DOC
 
 # Список поддерживаемых форматов
 SUPPORTED_FORMATS_IMG = ['BMP', 'GIF', 'JPG', 'PNG', 'WEBP']
@@ -18,21 +19,33 @@ def formats_kb_img():
     return InlineKeyboardMarkup(inline_keyboard=inline_kb_list)
 
 
-async def convert_image(input_path: str, output_format: str) -> str:
+async def convert_image(input_file: str, output_format: str) -> str:
     """
     Конвертирует изображение в указанный формат.
 
-    :param input_path: Путь к входному изображению
+    :param input_file: Путь к входному изображению
     :param output_format: Формат выходного изображения
     :return: Путь к выходному изображению
     """
     # Открываем входное изображение
-    with Image.open(input_path) as img:
+    with Image.open(input_file) as img:
         # Определяем путь для сохранения выходного изображения
-        base_name = os.path.splitext(os.path.basename(input_path))[0]
+        base_name = os.path.splitext(os.path.basename(input_file))[0]
         output_path = os.path.join(OUTPUT_IMG, f"{base_name}.{output_format}")
 
         # Сохраняем изображение в новом формате
         img.save(output_path)
 
     return output_path
+
+def convert_doc():
+    # Specify the PDF file location
+    pdf_file = rf"/run/media/rm/Files/Python/tg-converter/input_doc/document.pdf"
+
+    # Specify the output DOCX file location
+    docx_file = rf"/run/media/rm/Files/Python/tg-converter/output_doc/document.docx"
+
+    # Convert the PDF file to a DOCX file
+    cv = Converter(pdf_file)
+    cv.convert(docx_file)
+    cv.close()

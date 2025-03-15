@@ -1,5 +1,8 @@
 /venv
-env.py
 /.idea
 /input_img
 /output_img
+/input_doc
+/output_doc
+env.py
+test.py
