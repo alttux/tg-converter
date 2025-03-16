@@ -38,14 +38,16 @@ async def convert_image(input_file: str, output_format: str) -> str:
 
     return output_path
 
-def convert_doc():
+def convert_pdf_doc(input_path: str, output_path: str, input_file: str, output_file: str, formats: list) -> str:
     # Specify the PDF file location
-    pdf_file = rf"/run/media/rm/Files/Python/tg-converter/input_doc/document.pdf"
+    pdf_file = rf"{input_path}/{input_file}.pdf"
 
     # Specify the output DOCX file location
-    docx_file = rf"/run/media/rm/Files/Python/tg-converter/output_doc/document.docx"
+    docx_file = rf"{output_path}/{output_file}.docx"
 
     # Convert the PDF file to a DOCX file
     cv = Converter(pdf_file)
     cv.convert(docx_file)
     cv.close()
+
+    return docx_file
