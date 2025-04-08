@@ -45,6 +45,11 @@ async def cmd_img(message: Message, state: FSMContext):
     await message.answer("Конвертер изображений. Выберете входной формат:", reply_markup=formats_kb_img())
     await state.set_state(ConversionStatesImg.waiting_for_input_format)
 
+# Хэндлер на команду /img
+@dp.message(Command("about"))
+async def cmd_about(message: Message, state: FSMContext):
+    await message.answer("Телеграмм канал: https://t.me/st_release\n"
+                         "Github: https://github.com/alttux/tg-converter\n")
 '''
 ИЗОБРАЖЕНИЯ
 '''
