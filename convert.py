@@ -5,7 +5,7 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from env import OUTPUT_IMG, OUTPUT_DOC, INPUT_DOC
 
 # Список поддерживаемых форматов
-SUPPORTED_FORMATS_IMG = ['BMP', 'GIF', 'JPG', 'PNG', 'WEBP']
+SUPPORTED_FORMATS_IMG = ['BMP', 'GIF', 'JPG', 'PNG', 'WEBP', 'ICO']
 
 def formats_kb_img():
     """
