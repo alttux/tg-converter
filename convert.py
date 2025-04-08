@@ -1,8 +1,6 @@
 import os
 from PIL import Image
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from moviepy import VideoFileClip
-from pdf2docx import Converter
 
 from env import OUTPUT_IMG, OUTPUT_DOC, INPUT_DOC
 
