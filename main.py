@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import os
 from aiogram import Bot, Dispatcher, types, F
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
@@ -79,6 +80,8 @@ async def img_received(message: Message, state: FSMContext):
     await bot.download(message.photo[-1], destination=path_to_input)
     path_to_output = await convert_image(path_to_input, output_format)
     await message.answer_document(types.FSInputFile(path_to_output), caption="Вот ваше конвертированное изображение!")
+    os.remove(path_to_input)
+    os.remove(path_to_output)
     await state.clear()
 
 # Запуск процесса поллинга новых апдейтов
